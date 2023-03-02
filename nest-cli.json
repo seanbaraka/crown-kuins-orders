@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/artemis-messenger-monorepo/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/artemis-messenger-monorepo/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/artemis-messenger-monorepo",
+  "projects": {
+    "artemis-messenger-monorepo": {
+      "type": "application",
+      "root": "apps/artemis-messenger-monorepo",
+      "entryFile": "main",
+      "sourceRoot": "apps/artemis-messenger-monorepo/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/artemis-messenger-monorepo/tsconfig.app.json"
+      }
+    },
+    "payments": {
+      "type": "application",
+      "root": "apps/payments",
+      "entryFile": "main",
+      "sourceRoot": "apps/payments/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/payments/tsconfig.app.json"
+      }
+    }
+  }
+}
