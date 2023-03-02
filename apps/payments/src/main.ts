@@ -1,5 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { PaymentsModule } from './payments.module';
 
 async function bootstrap() {
@@ -9,6 +10,15 @@ async function bootstrap() {
   const port = config.get('payments.port')
   const tcpPort = config.get<number>('payments.microservice.port')
   const tcpHost = config.get('payments.microservice.host')
+
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.TCP,
+    options: {
+      host: tcpHost,
+      port: tcpPort
+    }
+  });
+  await app.startAllMicroservices()
 
   await app.listen(port, async() => {
     console.log('Payments Service\n---------------')
