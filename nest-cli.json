@@ -27,6 +27,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/payments/tsconfig.app.json"
       }
+    },
+    "ck-utils": {
+      "type": "library",
+      "root": "libs/ck-utils",
+      "entryFile": "index",
+      "sourceRoot": "libs/ck-utils/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/ck-utils/tsconfig.lib.json"
+      }
     }
   }
 }
