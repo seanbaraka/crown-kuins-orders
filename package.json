@@ -19,7 +19,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/orders/test/jest-e2e.json",
     "start:all": "concurrently 'nest start orders' 'nest start payments'",
-    "start:all:prod": "concurrently 'node dist/apps/orders/main' 'node dist/apps/payments/main'"
+    "start:orders": "node dist/apps/orders/main",
+    "start:payments": "node dist/apps/payments/main"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
