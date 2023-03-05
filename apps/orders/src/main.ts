@@ -7,20 +7,20 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = app.get<ConfigService>(ConfigService);
   const port = config.get<number>('orders.port');
-  const tcpPort = config.get<number>('orders.microservice.port');
-  const tcpHost = config.get('orders.microservice.host')
+  const redisPort = config.get<number>('redis.port');
+  const redisHost = config.get('redis.host')
   app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.TCP,
+    transport: Transport.REDIS,
     options: {
-      host: tcpHost,
-      port: tcpPort
+      host: redisHost,
+      port: redisPort
     }
   })
   await app.startAllMicroservices()
   await app.listen(port, async() => {
     console.log('Orders Service\n--------------')
     console.log(`Http Server running on ${await app.getUrl()}`);
-    console.log(`TCP Server running on port ${tcpPort}\n`)
+    console.log(`Connected to redis on port ${redisPort}\n`)
   });
 }
 bootstrap();

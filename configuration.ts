@@ -12,5 +12,9 @@ export default () => ({
             port: process.env.PAYMENTS_TCP_PORT,
             host: process.env.PAYMENTS_TCP_HOST
         }
+    },
+    redis: {
+        host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT
     }
 })
