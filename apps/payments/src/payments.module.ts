@@ -14,9 +14,12 @@ import { PaymentsService } from './payments.service';
         inject: [ConfigService],
         name: 'ORDERS_SERVICE',
         useFactory: (config: ConfigService) => ({
+          transport: Transport.REDIS,
           options: {
-            host: config.get('orders.microservice.host'),
-            port: config.get<number>('orders.microservice.port'),
+            host: config.get('redis.host'),
+            port: config.get<number>('redis.port'),
+            username: config.get('redis.user'),
+            password: config.get('redis.password')
           },
         }),
       },
