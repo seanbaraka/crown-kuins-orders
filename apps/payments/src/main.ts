@@ -10,12 +10,16 @@ async function bootstrap() {
   const port = config.get('payments.port')
   const redisPort = config.get<number>('redis.port')
   const redisHost = config.get('redis.host')
+  const redisUser = config.get('redis.user');
+  const redisPass = config.get('redis.password')
 
   app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.TCP,
+    transport: Transport.REDIS,
     options: {
       host: redisHost,
-      port: redisPort
+      port: redisPort,
+      username: redisUser,
+      password: redisPass
     }
   });
   await app.startAllMicroservices()
