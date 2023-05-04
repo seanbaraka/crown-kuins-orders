@@ -28,6 +28,8 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/microservices": "^9.3.9",
     "@nestjs/platform-express": "^9.0.0",
+    "amqp-connection-manager": "^4.1.13",
+    "amqplib": "^0.10.3",
     "ioredis": "^5.3.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"

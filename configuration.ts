@@ -18,5 +18,8 @@ export default () => ({
         port: process.env.REDIS_PORT,
         username: process.env.REDIS_USER,
         password: process.env.REDIS_PASSWORD
+    },
+    rabbit: {
+        url: process.env.RABBIT_URL
     }
 })
