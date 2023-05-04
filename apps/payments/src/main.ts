@@ -1,33 +1,37 @@
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import {
+  MicroserviceOptions,
+  RmqOptions,
+  Transport,
+} from '@nestjs/microservices';
 import { PaymentsModule } from './payments.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(PaymentsModule);
   const config = app.get<ConfigService>(ConfigService);
 
-  const port = config.get('payments.port')
-  const redisPort = config.get<number>('redis.port')
-  const redisHost = config.get('redis.host')
-  const redisUser = config.get('redis.user');
-  const redisPass = config.get('redis.password')
+  const port = config.get('payments.port');
+  const rabbitHost = config.get<string>('rabbit.url');
 
-  app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.REDIS,
+  const rabbitOptions: RmqOptions = {
+    transport: Transport.RMQ,
     options: {
-      host: redisHost,
-      port: redisPort,
-      username: redisUser,
-      password: redisPass
-    }
-  });
-  await app.startAllMicroservices()
+      urls: [rabbitHost],
+      queue: 'payments_queue',
+      queueOptions: {
+        durable: false,
+      },
+    },
+  };
 
-  await app.listen(port, async() => {
-    console.log('Payments Service\n---------------')
+  app.connectMicroservice<MicroserviceOptions>(rabbitOptions);
+  await app.startAllMicroservices();
+
+  await app.listen(port, async () => {
+    console.log('Payments Service\n---------------');
     console.log(`Http Server running on ${await app.getUrl()}`);
-    console.log(`Connected to redis on port ${redisPort}\n`)
+    console.log(`Connected to rabbit on ${rabbitHost}\n`);
   });
 }
 bootstrap();
