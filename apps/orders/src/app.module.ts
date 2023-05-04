@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ClientsModule, RmqOptions, Transport } from '@nestjs/microservices';
 import configuration from 'configuration';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -14,14 +14,15 @@ import { AppService } from './app.service';
         inject: [ConfigService],
         name: 'PAYMENTS_SERVICE',
         useFactory: (config: ConfigService) => ({
-          transport: Transport.REDIS,
+          transport: Transport.RMQ,
           options: {
-            host: config.get('redis.host'),
-            port: config.get<number>('redis.port'),
-            username: config.get('redis.user'),
-            password: config.get('redis.password')
+            urls: [config.get('rabbit.url')],
+            queue: 'payments_queue',
+            queueOptions: {
+              durable: false
+            }
           },
-        }),
+        } as RmqOptions),
       },
     ]),
   ],
