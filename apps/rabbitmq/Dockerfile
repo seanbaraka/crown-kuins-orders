@@ -9,8 +9,9 @@ RUN apt-get update && \
     apt-get install curl gnupg apt-transport-https -y
 
 # Add the RabbitMQ repository signing key and repository
-RUN curl -1sLf https://ppa1.novemberain.com/gpg.E495BB49CC4BBE5B.key | gpg --dearmor | tee /usr/share/keyrings/rabbitmq.E495BB49CC4BBE5B.gpg > /dev/null \
-    tee /etc/apt/sources.list.d/rabbitmq.list
+RUN curl -1sLf https://ppa1.novemberain.com/gpg.E495BB49CC4BBE5B.key | gpg --dearmor | tee /usr/share/keyrings/rabbitmq.E495BB49CC4BBE5B.gpg > /dev/null
+
+RUN tee /etc/apt/sources.list.d/rabbitmq.list
 # Install RabbitMQ and its dependencies
 RUN apt-get update -y && \
     apt-get install -y erlang-base \
