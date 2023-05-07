@@ -6,15 +6,20 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Update the package list and install required dependencies
 RUN apt-get update && \
-    apt-get install -y wget gnupg apt-transport-https ca-certificates
+    apt-get install curl gnupg apt-transport-https -y
 
 # Add the RabbitMQ repository signing key and repository
-RUN wget -O- https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc | apt-key add - && \
-    echo "deb https://packages.erlang-solutions.com/ubuntu focal contrib" > /etc/apt/sources.list.d/erlang.list
-
+RUN curl -1sLf "https://keys.openpgp.org/vks/v1/by-fingerprint/0A9AF2115F4687BD29803A206B73A36E6026DFCA" | sudo gpg --dearmor | sudo tee /usr/share/keyrings/com.rabbitmq.team.gpg > /dev/null \
+    tee /etc/apt/sources.list.d/rabbitmq.list
 # Install RabbitMQ and its dependencies
 RUN apt-get update && \
-    apt-get install -y esl-erlang rabbitmq-server
+    apt-get install -y erlang-base \
+                            erlang-asn1 erlang-crypto erlang-eldap erlang-ftp erlang-inets \
+                            erlang-mnesia erlang-os-mon erlang-parsetools erlang-public-key \
+                            erlang-runtime-tools erlang-snmp erlang-ssl \
+                            erlang-syntax-tools erlang-tftp erlang-tools erlang-xmerl
+
+RUN apt-get install rabbitmq-server -y --fix-missing
 
 # Expose the RabbitMQ ports
 EXPOSE 5672 15672
