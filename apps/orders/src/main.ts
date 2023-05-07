@@ -10,6 +10,7 @@ async function bootstrap() {
   const rabbitUrl = config.get('rabbit.url');
 
   const rabbitOptions: RmqOptions = {
+    transport: Transport.RMQ,
     options: {
       urls: [rabbitUrl],
       queue: 'orders_queue',
