@@ -14,10 +14,10 @@ RUN curl -1sLf "https://keys.openpgp.org/vks/v1/by-fingerprint/0A9AF2115F4687BD2
 # Install RabbitMQ and its dependencies
 RUN apt-get update && \
     apt-get install -y erlang-base \
-                            erlang-asn1 erlang-crypto erlang-eldap erlang-ftp erlang-inets \
-                            erlang-mnesia erlang-os-mon erlang-parsetools erlang-public-key \
-                            erlang-runtime-tools erlang-snmp erlang-ssl \
-                            erlang-syntax-tools erlang-tftp erlang-tools erlang-xmerl
+    erlang-asn1 erlang-crypto erlang-eldap erlang-ftp erlang-inets \
+    erlang-mnesia erlang-os-mon erlang-parsetools erlang-public-key \
+    erlang-runtime-tools erlang-snmp erlang-ssl \
+    erlang-syntax-tools erlang-tftp erlang-tools erlang-xmerl
 
 RUN apt-get install rabbitmq-server -y --fix-missing
 
